@@ -1,8 +1,8 @@
 # Mraish Furniture — Website
 
-A static one-page marketing site for **Mraish Furniture** (Amman, Jordan — established
-1993): bespoke carpentry, upholstery, interior & exterior design, glass, aluminum,
-drapery, painting and lighting.
+A static one-page marketing site for **Mraish Furniture** (Jordan — established 1993):
+bespoke carpentry, upholstery, interior & exterior design, glass, aluminum, drapery,
+painting and lighting.
 
 Built with **React + TypeScript + Vite + MUI**.
 

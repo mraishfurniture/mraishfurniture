@@ -75,7 +75,7 @@ export interface Dictionary {
 }
 
 const en: Dictionary = {
-  brand: { name: 'Mraish', tag: 'Furniture · Amman' },
+  brand: { name: 'Mraish', tag: 'Furniture · Est. 1993' },
   langToggle: 'عربي',
   nav: { about: 'About', services: 'Services', work: 'Work', process: 'Process', contact: 'Contact' },
   whatsappCta: 'WhatsApp',
@@ -83,17 +83,17 @@ const en: Dictionary = {
     'Hello Mraish Furniture — I found your website and would like to discuss a project.',
   callUs: 'Call us',
   hero: {
-    overline: 'Bespoke furniture & interior craft — Amman · Since 1993',
+    overline: 'Bespoke furniture & interior craft — Jordan · Since 1993',
     titleA: 'Everything a beautiful space needs — crafted by ',
     titleEm: 'one workshop.',
-    sub: 'Carpentry, upholstery, glass, aluminum, drapery, painting and lighting — Mraish Furniture takes your space from first sketch to final installed detail, under one roof in Amman.',
+    sub: 'Carpentry, upholstery, glass, aluminum, drapery, painting and lighting — Mraish Furniture takes your space from first sketch to final installed detail, all under one roof.',
     ctaPrimary: 'Start your project',
     ctaSecondary: 'See the craft',
   },
   about: {
     overline: 'The atelier',
     title: 'Eight trades. One workshop. One standard.',
-    p1: 'Mraish Furniture is an Amman workshop, established in 1993, whose work spans everything a finished room needs — carpentry, upholstery, glass, aluminum, drapery, painting and lighting, held together by a designer’s eye.',
+    p1: 'Mraish Furniture is a Jordanian workshop, established in 1993, whose work spans everything a finished room needs — carpentry, upholstery, glass, aluminum, drapery, painting and lighting, held together by a designer’s eye.',
     p2: 'Because every trade lives under one roof, there are no subcontractor gaps and no weeks lost between steps — just one person accountable for the result, from the first site visit to the final installed detail.',
     highlights: [
       { lead: 'Made to measure', rest: 'built for your room, not for a catalogue.' },
@@ -105,7 +105,7 @@ const en: Dictionary = {
       year: '1993',
       title: 'Three decades of craft',
       caption:
-        'Established 1993 in Amman — furnishing homes, businesses and diplomatic residences ever since.',
+        'Established 1993 — furnishing homes, businesses and diplomatic residences across Jordan ever since.',
     },
     imgMainAlt: 'Sketching a bespoke piece at the drafting table',
     imgDetailAlt: 'Finished interior detail',
@@ -165,7 +165,7 @@ const en: Dictionary = {
   portfolio: {
     overline: 'Selected work',
     title: 'The proof is in the pieces',
-    subtitle: 'A glimpse of the joinery, upholstery and finishing that leaves our Amman workshop.',
+    subtitle: 'A glimpse of the joinery, upholstery and finishing that leaves our workshop.',
     all: 'All',
     categories: {
       joinery: 'Joinery',
@@ -246,7 +246,11 @@ const en: Dictionary = {
         caption: 'Photos, plans and voice notes welcome',
         isPhone: true,
       },
-      { label: 'Workshop', value: 'Amman, Jordan', caption: 'Serving clients across the Kingdom' },
+      {
+        label: 'Where we work',
+        value: 'Across Jordan',
+        caption: 'We come to you — site visits, measuring and installation',
+      },
       {
         label: 'Email',
         value: 'mraishfurniture@gmail.com',
@@ -257,38 +261,38 @@ const en: Dictionary = {
   },
   footer: {
     blurb:
-      'Bespoke furniture and complete interior finishing, made by one Amman workshop since 1993 — from first sketch to final installation.',
+      'Bespoke furniture and complete interior finishing, made by one Jordanian workshop since 1993 — from first sketch to final installation.',
     servicesHeading: 'Services',
     exploreHeading: 'Explore',
     contactHeading: 'Contact',
     whatsappLine: 'WhatsApp — photos & voice notes welcome',
     rights: 'All rights reserved.',
-    craftedIn: 'Crafted in Amman since 1993',
+    craftedIn: 'Crafted in Jordan since 1993',
     backToTop: 'Back to top',
   },
   fabLabel: 'Chat on WhatsApp',
-  city: 'Amman, Jordan',
+  city: 'Jordan',
 }
 
 const ar: Dictionary = {
-  brand: { name: 'مريش', tag: 'للأثاث · عمّان' },
+  brand: { name: 'مريش', tag: 'للأثاث · منذ 1993' },
   langToggle: 'English',
   nav: { about: 'من نحن', services: 'خدماتنا', work: 'أعمالنا', process: 'كيف نعمل', contact: 'تواصل' },
   whatsappCta: 'واتساب',
   whatsappMessage: 'مرحباً مريش للأثاث — رأيت موقعكم وأود مناقشة مشروع.',
   callUs: 'اتصل بنا',
   hero: {
-    overline: 'أثاث مفصّل وحِرَف داخلية — عمّان · منذ 1993',
+    overline: 'أثاث مفصّل وحِرَف داخلية — الأردن · منذ 1993',
     titleA: 'كل ما يحتاجه المكان الجميل — تصنعه ',
     titleEm: 'ورشة واحدة.',
-    sub: 'نجارة، تنجيد، زجاج، ألمنيوم، ستائر، دهان وإنارة — مريش للأثاث تأخذ مساحتك من أول رسمة حتى آخر تفصيلة مركّبة، تحت سقف واحد في عمّان.',
+    sub: 'نجارة، تنجيد، زجاج، ألمنيوم، ستائر، دهان وإنارة — مريش للأثاث تأخذ مساحتك من أول رسمة حتى آخر تفصيلة مركّبة، كل ذلك تحت سقف واحد.',
     ctaPrimary: 'ابدأ مشروعك',
     ctaSecondary: 'شاهد أعمالنا',
   },
   about: {
     overline: 'الورشة',
     title: 'ثماني حِرَف. ورشة واحدة. معيار واحد.',
-    p1: 'مريش للأثاث ورشة عمّانية تأسست عام 1993، وتغطي أعمالها كل ما تحتاجه الغرفة المكتملة — نجارة وتنجيد وزجاج وألمنيوم وستائر ودهان وإنارة، تجمعها عينُ مصمّم.',
+    p1: 'مريش للأثاث ورشة أردنية تأسست عام 1993، وتغطي أعمالها كل ما تحتاجه الغرفة المكتملة — نجارة وتنجيد وزجاج وألمنيوم وستائر ودهان وإنارة، تجمعها عينُ مصمّم.',
     p2: 'لأن كل الحِرَف تعيش تحت سقف واحد، لا فجوات مقاولين ولا أسابيع ضائعة بين الخطوات — شخص واحد مسؤول عن النتيجة، من أول زيارة للموقع حتى آخر تفصيلة مركّبة.',
     highlights: [
       { lead: 'على المقاس', rest: 'يُصنع لغرفتك أنت، لا لكتالوج.' },
@@ -299,7 +303,7 @@ const ar: Dictionary = {
       badge: 'تأسست',
       year: '1993',
       title: 'ثلاثة عقود من الحِرفة',
-      caption: 'منذ عام 1993 في عمّان — نؤثّث البيوت والأعمال والمقارّ الدبلوماسية.',
+      caption: 'منذ عام 1993 — نؤثّث البيوت والأعمال والمقارّ الدبلوماسية في مختلف أنحاء الأردن.',
     },
     imgMainAlt: 'رسم قطعة مفصّلة على طاولة التصميم',
     imgDetailAlt: 'تفصيلة داخلية منجزة',
@@ -350,7 +354,7 @@ const ar: Dictionary = {
   portfolio: {
     overline: 'من أعمالنا',
     title: 'الدليل في القطع نفسها',
-    subtitle: 'لمحة من أعمال النجارة والتنجيد والتشطيب التي تخرج من ورشتنا في عمّان.',
+    subtitle: 'لمحة من أعمال النجارة والتنجيد والتشطيب التي تخرج من ورشتنا.',
     all: 'الكل',
     categories: {
       joinery: 'النجارة',
@@ -428,7 +432,11 @@ const ar: Dictionary = {
         caption: 'نرحّب بالصور والمخططات والرسائل الصوتية',
         isPhone: true,
       },
-      { label: 'الورشة', value: 'عمّان، الأردن', caption: 'نخدم عملاءنا في مختلف أنحاء المملكة' },
+      {
+        label: 'أين نعمل',
+        value: 'في جميع أنحاء الأردن',
+        caption: 'نصل إليك — زيارات وقياس وتركيب في الموقع',
+      },
       {
         label: 'البريد الإلكتروني',
         value: 'mraishfurniture@gmail.com',
@@ -438,17 +446,17 @@ const ar: Dictionary = {
     ],
   },
   footer: {
-    blurb: 'أثاث مفصّل وتشطيب داخلي متكامل من ورشة عمّانية واحدة منذ 1993 — من أول رسمة حتى التركيب النهائي.',
+    blurb: 'أثاث مفصّل وتشطيب داخلي متكامل من ورشة أردنية واحدة منذ 1993 — من أول رسمة حتى التركيب النهائي.',
     servicesHeading: 'خدماتنا',
     exploreHeading: 'استكشف',
     contactHeading: 'تواصل',
     whatsappLine: 'واتساب — نرحّب بالصور والرسائل الصوتية',
     rights: 'جميع الحقوق محفوظة.',
-    craftedIn: 'صُنع في عمّان منذ 1993',
+    craftedIn: 'صُنع في الأردن منذ 1993',
     backToTop: 'العودة إلى الأعلى',
   },
   fabLabel: 'راسلنا على واتساب',
-  city: 'عمّان، الأردن',
+  city: 'الأردن',
 }
 
 export const DICTIONARIES: Record<Language, Dictionary> = { en, ar }
