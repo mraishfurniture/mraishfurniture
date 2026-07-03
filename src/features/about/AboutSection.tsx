@@ -1,5 +1,4 @@
 import { Box, Stack, Typography } from '@mui/material'
-import { BUSINESS } from '../../global/config/business'
 import { Reveal } from '../../global/components/Reveal'
 import { Section } from '../../global/components/Section'
 import { SectionHeading } from '../../global/components/SectionHeading'
@@ -12,8 +11,7 @@ const DETAIL_IMG =
   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=560&h=560&q=80'
 
 export function AboutSection() {
-  const { lang, t } = useLanguage()
-  const founderName = lang === 'ar' ? 'عمر مريش' : BUSINESS.founder
+  const { t } = useLanguage()
 
   return (
     <Section id="about">
@@ -117,28 +115,49 @@ export function AboutSection() {
             >
               <Box
                 sx={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: '50%',
+                  width: 66,
+                  height: 66,
                   flexShrink: 0,
-                  bgcolor: colors.espresso,
-                  color: colors.brassLight,
+                  border: '1px solid',
+                  borderColor: colors.lineBrass,
                   display: 'grid',
                   placeItems: 'center',
-                  fontFamily: (theme) => theme.typography.h5.fontFamily,
-                  fontStyle: 'italic',
-                  fontSize: '1.15rem',
                 }}
               >
-                OM
+                <Box sx={{ textAlign: 'center', lineHeight: 1 }}>
+                  <Typography
+                    component="span"
+                    sx={{
+                      display: 'block',
+                      fontSize: '0.55rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.28em',
+                      textTransform: 'uppercase',
+                      color: 'text.secondary',
+                    }}
+                  >
+                    {t.about.est.badge}
+                  </Typography>
+                  <Typography
+                    component="span"
+                    dir="ltr"
+                    sx={{
+                      display: 'block',
+                      mt: 0.5,
+                      fontFamily: (theme) => theme.typography.h5.fontFamily,
+                      fontSize: '1.3rem',
+                      fontWeight: 700,
+                      color: 'primary.main',
+                    }}
+                  >
+                    {t.about.est.year}
+                  </Typography>
+                </Box>
               </Box>
               <Box>
-                <Typography sx={{ fontWeight: 700 }}>{founderName}</Typography>
+                <Typography sx={{ fontWeight: 700 }}>{t.about.est.title}</Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {t.about.founderRole} ·{' '}
-                  <Box component="span" dir="ltr">
-                    {BUSINESS.phoneDisplay}
-                  </Box>
+                  {t.about.est.caption}
                 </Typography>
               </Box>
             </Stack>

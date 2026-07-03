@@ -1,8 +1,8 @@
 # Mraish Furniture — Website
 
-A static one-page marketing site for **Mraish Furniture** (Omar Mraish, Amman, Jordan):
-bespoke carpentry, upholstery, interior & exterior design, glass, aluminum, drapery,
-painting and lighting.
+A static one-page marketing site for **Mraish Furniture** (Amman, Jordan — established
+1993): bespoke carpentry, upholstery, interior & exterior design, glass, aluminum,
+drapery, painting and lighting.
 
 Built with **React + TypeScript + Vite + MUI**.
 
@@ -68,9 +68,9 @@ src/
   `src/features/portfolio/portfolio.data.ts` and `src/features/about/AboutSection.tsx`
   with real project photos (the portfolio section already says "representative imagery"
   until then).
-- **Review the copy** — especially the founder quote in
-  `src/features/about/FounderQuote.tsx`; it is draft marketing copy written for Omar's
-  approval, not something he actually said.
+- **Review the copy** — especially the workshop quote rendered by
+  `src/features/about/FounderQuote.tsx`; it is draft marketing copy awaiting the
+  owner's approval.
 
 ## Dev utility
 

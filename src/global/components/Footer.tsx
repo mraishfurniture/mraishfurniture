@@ -123,6 +123,21 @@ export function Footer() {
               >
                 {t.footer.whatsappLine}
               </Typography>
+              <Typography
+                component="a"
+                href={BUSINESS.emailHref}
+                dir="ltr"
+                variant="body2"
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  width: 'fit-content',
+                  overflowWrap: 'anywhere',
+                  '&:hover': { color: colors.brassLight },
+                }}
+              >
+                {BUSINESS.email}
+              </Typography>
               <Typography variant="body2">{t.city}</Typography>
             </Stack>
           </Box>

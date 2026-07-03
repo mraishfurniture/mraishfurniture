@@ -92,49 +92,57 @@ export function ContactSection() {
             textAlign: { xs: 'center', sm: 'start' },
           }}
         >
-          {t.contact.info.map((item) => (
-            <Box key={item.label}>
-              <Typography
-                component="p"
-                sx={{
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.3em',
-                  textTransform: 'uppercase',
-                  color: colors.brass,
-                }}
-              >
-                {item.label}
-              </Typography>
-              {item.isPhone ? (
+          {t.contact.info.map((item) => {
+            const href = item.isPhone
+              ? whatsappHref(t.whatsappMessage)
+              : item.isEmail
+                ? BUSINESS.emailHref
+                : undefined
+            return (
+              <Box key={item.label}>
                 <Typography
-                  component="a"
-                  href={whatsappHref(t.whatsappMessage)}
-                  target="_blank"
-                  rel="noreferrer"
-                  dir="ltr"
+                  component="p"
                   sx={{
-                    display: 'inline-block',
-                    mt: 1.25,
-                    fontSize: '1.05rem',
-                    fontWeight: 600,
-                    color: colors.ivory,
-                    textDecoration: 'none',
-                    '&:hover': { color: colors.brassLight },
+                    fontSize: '0.68rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.3em',
+                    textTransform: 'uppercase',
+                    color: colors.brass,
                   }}
                 >
-                  {item.value}
+                  {item.label}
                 </Typography>
-              ) : (
-                <Typography sx={{ mt: 1.25, fontSize: '1.05rem', fontWeight: 600, color: colors.ivory }}>
-                  {item.value}
+                {href ? (
+                  <Typography
+                    component="a"
+                    href={href}
+                    target={item.isPhone ? '_blank' : undefined}
+                    rel={item.isPhone ? 'noreferrer' : undefined}
+                    dir="ltr"
+                    sx={{
+                      display: 'inline-block',
+                      mt: 1.25,
+                      fontSize: '1.05rem',
+                      fontWeight: 600,
+                      color: colors.ivory,
+                      textDecoration: 'none',
+                      overflowWrap: 'anywhere',
+                      '&:hover': { color: colors.brassLight },
+                    }}
+                  >
+                    {item.value}
+                  </Typography>
+                ) : (
+                  <Typography sx={{ mt: 1.25, fontSize: '1.05rem', fontWeight: 600, color: colors.ivory }}>
+                    {item.value}
+                  </Typography>
+                )}
+                <Typography variant="body2" sx={{ mt: 0.5, color: colors.faintDark }}>
+                  {item.caption}
                 </Typography>
-              )}
-              <Typography variant="body2" sx={{ mt: 0.5, color: colors.faintDark }}>
-                {item.caption}
-              </Typography>
-            </Box>
-          ))}
+              </Box>
+            )
+          })}
         </Box>
       </Reveal>
     </Section>
