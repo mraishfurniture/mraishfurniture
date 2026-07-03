@@ -1,41 +1,46 @@
 import { useState } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Dialog, IconButton, Stack, Typography } from '@mui/material'
+import CloseRounded from '@mui/icons-material/CloseRounded'
 import { Reveal } from '../../global/components/Reveal'
 import { Section } from '../../global/components/Section'
 import { SectionHeading } from '../../global/components/SectionHeading'
+import { useLanguage } from '../../global/i18n/LanguageContext'
 import { colors } from '../../global/theme/theme'
-import { PROJECTS } from './portfolio.data'
-
-const CATEGORIES = ['All', ...Array.from(new Set(PROJECTS.map((p) => p.category)))]
+import { CATEGORY_KEYS, PROJECTS, type Project } from './portfolio.data'
 
 export function PortfolioSection() {
-  const [category, setCategory] = useState('All')
-  const visible = category === 'All' ? PROJECTS : PROJECTS.filter((p) => p.category === category)
+  const { t } = useLanguage()
+  const [categoryKey, setCategoryKey] = useState('all')
+  const [openProject, setOpenProject] = useState<Project | null>(null)
+
+  const visible =
+    categoryKey === 'all' ? PROJECTS : PROJECTS.filter((p) => p.categoryKey === categoryKey)
 
   return (
     <Section id="work">
       <SectionHeading
-        overline="Selected work"
-        title="The proof is in the pieces"
-        subtitle="A glimpse of the joinery, upholstery and finishing that leaves our Amman workshop."
+        overline={t.portfolio.overline}
+        title={t.portfolio.title}
+        subtitle={t.portfolio.subtitle}
       />
 
       <Reveal>
         <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1.25 }}>
-          {CATEGORIES.map((cat) => {
-            const selected = cat === category
+          {['all', ...CATEGORY_KEYS].map((key) => {
+            const selected = key === categoryKey
+            const label = key === 'all' ? t.portfolio.all : t.portfolio.categories[key]
             return (
               <Box
-                key={cat}
+                key={key}
                 component="button"
                 type="button"
-                onClick={() => setCategory(cat)}
+                onClick={() => setCategoryKey(key)}
                 sx={{
                   px: 2.25,
                   py: 1,
                   cursor: 'pointer',
                   fontFamily: 'inherit',
-                  fontSize: '0.72rem',
+                  fontSize: '0.78rem',
                   fontWeight: 700,
                   letterSpacing: '0.16em',
                   textTransform: 'uppercase',
@@ -44,10 +49,13 @@ export function PortfolioSection() {
                   bgcolor: selected ? colors.espresso : 'transparent',
                   color: selected ? colors.ivory : 'text.secondary',
                   transition: 'all 0.25s ease',
-                  '&:hover': { borderColor: colors.brass, color: selected ? colors.ivory : 'text.primary' },
+                  '&:hover': {
+                    borderColor: colors.brass,
+                    color: selected ? colors.ivory : 'text.primary',
+                  },
                 }}
               >
-                {cat}
+                {label}
               </Box>
             )
           })}
@@ -55,7 +63,7 @@ export function PortfolioSection() {
       </Reveal>
 
       <Box
-        key={category}
+        key={categoryKey}
         sx={{
           mt: 5,
           display: 'grid',
@@ -68,9 +76,18 @@ export function PortfolioSection() {
         {visible.map((project, index) => (
           <Box
             key={project.id}
+            component="button"
+            type="button"
+            onClick={() => setOpenProject(project)}
+            aria-label={t.portfolio.projects[project.id]}
             sx={{
               position: 'relative',
               overflow: 'hidden',
+              p: 0,
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'inherit',
+              bgcolor: colors.imgPlaceholder,
               gridRow: { xs: 'span 1', md: project.tall ? 'span 2' : 'span 1' },
               animation: 'portfolio-in 0.55s ease both',
               animationDelay: `${index * 60}ms`,
@@ -86,7 +103,7 @@ export function PortfolioSection() {
             <Box
               component="img"
               src={project.img}
-              alt={project.title}
+              alt={t.portfolio.projects[project.id]}
               loading="lazy"
               sx={{
                 width: '100%',
@@ -120,17 +137,17 @@ export function PortfolioSection() {
               <Typography
                 component="span"
                 sx={{
-                  fontSize: '0.66rem',
+                  fontSize: '0.7rem',
                   fontWeight: 700,
                   letterSpacing: '0.3em',
                   textTransform: 'uppercase',
                   color: colors.brassLight,
                 }}
               >
-                {project.category}
+                {t.portfolio.categories[project.categoryKey]}
               </Typography>
               <Typography variant="h6" sx={{ mt: 0.75, color: colors.ivory }}>
-                {project.title}
+                {t.portfolio.projects[project.id]}
               </Typography>
             </Box>
           </Box>
@@ -138,9 +155,58 @@ export function PortfolioSection() {
       </Box>
 
       <Typography variant="body2" sx={{ mt: 4, fontStyle: 'italic', color: 'text.secondary' }}>
-        Representative imagery. Full project photography is available on WhatsApp — ask to see work
-        similar to yours.
+        {t.portfolio.caption}
       </Typography>
+
+      <Dialog
+        open={openProject !== null}
+        onClose={() => setOpenProject(null)}
+        maxWidth="md"
+        slotProps={{ paper: { sx: { bgcolor: colors.espressoDeep, backgroundImage: 'none' } } }}
+      >
+        {openProject && (
+          <Box sx={{ position: 'relative' }}>
+            <IconButton
+              onClick={() => setOpenProject(null)}
+              aria-label="Close"
+              sx={{
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                zIndex: 1,
+                color: colors.ivory,
+                bgcolor: 'rgba(21, 16, 9, 0.55)',
+                '&:hover': { bgcolor: 'rgba(21, 16, 9, 0.8)' },
+              }}
+            >
+              <CloseRounded />
+            </IconButton>
+            <Box
+              component="img"
+              src={openProject.img.replace('w=1100', 'w=1600')}
+              alt={t.portfolio.projects[openProject.id]}
+              sx={{ display: 'block', width: '100%', maxHeight: '78vh', objectFit: 'cover' }}
+            />
+            <Box sx={{ p: 3, color: colors.ivory }}>
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase',
+                  color: colors.brassLight,
+                }}
+              >
+                {t.portfolio.categories[openProject.categoryKey]}
+              </Typography>
+              <Typography variant="h5" sx={{ mt: 0.75 }}>
+                {t.portfolio.projects[openProject.id]}
+              </Typography>
+            </Box>
+          </Box>
+        )}
+      </Dialog>
     </Section>
   )
 }

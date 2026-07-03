@@ -1,5 +1,6 @@
 import { Footer } from './global/components/Footer'
 import { Navbar } from './global/components/Navbar'
+import { ScrollProgress } from './global/components/ScrollProgress'
 import { WhatsAppFab } from './global/components/WhatsAppFab'
 import { AboutSection } from './features/about/AboutSection'
 import { FounderQuote } from './features/about/FounderQuote'
@@ -14,6 +15,7 @@ import { ServicesSection } from './features/services/ServicesSection'
 export default function App() {
   return (
     <>
+      <ScrollProgress />
       <Navbar />
       <main>
         <HeroSection />

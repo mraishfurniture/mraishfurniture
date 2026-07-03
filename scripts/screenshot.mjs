@@ -1,16 +1,20 @@
 /**
  * Dev utility: captures QA screenshots of the running site (npm run preview first).
- * Usage: node scripts/screenshot.mjs
+ * Usage: node scripts/screenshot.mjs [en|ar]
  */
 import puppeteer from 'puppeteer-core'
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 const URL = 'http://localhost:4173/'
+const LANG = process.argv[2] === 'ar' ? 'ar' : 'en'
 const SECTIONS = ['top', 'about', 'services', 'work', 'process', 'contact']
 
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: true })
 const page = await browser.newPage()
 await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
+await page.evaluateOnNewDocument((lang) => {
+  localStorage.setItem('mraish-lang', lang)
+}, LANG)
 
 async function preloadWholePage() {
   await page.evaluate(async () => {
@@ -33,17 +37,20 @@ for (const id of SECTIONS) {
     document.getElementById(sectionId)?.scrollIntoView()
   }, id)
   await new Promise((r) => setTimeout(r, 600))
-  await page.screenshot({ path: `/tmp/shot-d-${id}.png` })
+  await page.screenshot({ path: `/tmp/shot-${LANG}-d-${id}.png` })
 }
 await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
 await new Promise((r) => setTimeout(r, 600))
-await page.screenshot({ path: '/tmp/shot-d-footer.png' })
+await page.screenshot({ path: `/tmp/shot-${LANG}-d-footer.png` })
 
-// Mobile: full page
-await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 1.5 })
+// Mobile: hero + services
+await page.setViewport({ width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 })
 await page.goto(URL, { waitUntil: 'networkidle0', timeout: 60000 })
 await preloadWholePage()
-await page.screenshot({ path: '/tmp/shot-m-full.png', fullPage: true })
+await page.screenshot({ path: `/tmp/shot-${LANG}-m-top.png` })
+await page.evaluate(() => document.getElementById('services')?.scrollIntoView())
+await new Promise((r) => setTimeout(r, 600))
+await page.screenshot({ path: `/tmp/shot-${LANG}-m-services.png` })
 
 await browser.close()
-console.log('done')
+console.log(`done: ${LANG}`)

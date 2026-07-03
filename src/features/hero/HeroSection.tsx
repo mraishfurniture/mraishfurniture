@@ -1,13 +1,16 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import NorthEast from '@mui/icons-material/NorthEast'
-import { BUSINESS } from '../../global/config/business'
+import { whatsappHref } from '../../global/config/business'
 import { Reveal } from '../../global/components/Reveal'
+import { useLanguage } from '../../global/i18n/LanguageContext'
 import { colors } from '../../global/theme/theme'
 
 const HERO_IMG =
   'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=2400&q=80'
 
 export function HeroSection() {
+  const { t } = useLanguage()
+
   return (
     <Box
       id="top"
@@ -34,6 +37,12 @@ export function HeroSection() {
           `,
           backgroundSize: 'cover',
           backgroundPosition: 'center 55%',
+          animation: 'hero-zoom 16s ease-out forwards',
+          '@keyframes hero-zoom': {
+            from: { transform: 'scale(1.07)' },
+            to: { transform: 'scale(1)' },
+          },
+          '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
         }}
       />
 
@@ -51,24 +60,23 @@ export function HeroSection() {
                 color: colors.brassLight,
               }}
             >
-              Bespoke furniture &amp; interior craft — {BUSINESS.city}
+              {t.hero.overline}
             </Typography>
           </Stack>
         </Reveal>
 
         <Reveal delay={90}>
           <Typography variant="h1" sx={{ mt: 3.5, maxWidth: 940 }}>
-            Everything a beautiful space needs — crafted by{' '}
-            <Box component="em" sx={{ color: colors.brassLight, fontWeight: 400 }}>
-              one workshop.
+            {t.hero.titleA}
+            <Box component="em" sx={{ color: colors.brassLight, fontWeight: 'inherit' }}>
+              {t.hero.titleEm}
             </Box>
           </Typography>
         </Reveal>
 
         <Reveal delay={180}>
           <Typography sx={{ mt: 3.5, maxWidth: 580, color: 'rgba(240, 232, 218, 0.8)' }}>
-            Carpentry, upholstery, glass, aluminum, drapery, painting and lighting — Mraish Furniture
-            takes your space from first sketch to final installed detail, under one roof in Amman.
+            {t.hero.sub}
           </Typography>
         </Reveal>
 
@@ -77,12 +85,12 @@ export function HeroSection() {
             <Button
               size="large"
               variant="contained"
-              href={BUSINESS.whatsappHref}
+              href={whatsappHref(t.whatsappMessage)}
               target="_blank"
               rel="noreferrer"
-              endIcon={<NorthEast />}
+              endIcon={<NorthEast className="flip-rtl" />}
             >
-              Start your project
+              {t.hero.ctaPrimary}
             </Button>
             <Button
               size="large"
@@ -94,7 +102,7 @@ export function HeroSection() {
                 '&:hover': { borderColor: colors.ivory, bgcolor: 'rgba(244, 238, 226, 0.06)' },
               }}
             >
-              See the craft
+              {t.hero.ctaSecondary}
             </Button>
           </Stack>
         </Reveal>

@@ -2,35 +2,19 @@ import { Box, Typography } from '@mui/material'
 import { Reveal } from '../../global/components/Reveal'
 import { Section } from '../../global/components/Section'
 import { SectionHeading } from '../../global/components/SectionHeading'
-import { colors, serifFamily } from '../../global/theme/theme'
-
-const STEPS = [
-  {
-    title: 'Consult & measure',
-    text: 'We visit, listen, measure and advise — bring photos, plans or just an idea.',
-  },
-  {
-    title: 'Design & materials',
-    text: 'You approve the design, fabrics, woods and finishes before anything is cut.',
-  },
-  {
-    title: 'Craft in our workshop',
-    text: 'Joinery, upholstery, glass and finishing happen under one roof, under our eyes.',
-  },
-  {
-    title: 'Deliver & install',
-    text: 'We deliver, install, light and paint — then hand over a finished space, not a kit.',
-  },
-]
+import { useLanguage } from '../../global/i18n/LanguageContext'
+import { colors } from '../../global/theme/theme'
 
 export function ProcessSection() {
+  const { lang, t } = useLanguage()
+
   return (
     <Section id="process" dark>
       <SectionHeading
         dark
-        overline="How we work"
-        title="From first visit to final polish"
-        subtitle="A simple, predictable path — you always know what happens next and who is responsible. (Hint: it’s us.)"
+        overline={t.process.overline}
+        title={t.process.title}
+        subtitle={t.process.subtitle}
       />
 
       <Box
@@ -40,7 +24,7 @@ export function ProcessSection() {
           gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
         }}
       >
-        {STEPS.map((step, index) => (
+        {t.process.steps.map((step, index) => (
           <Reveal key={step.title} delay={index * 90}>
             <Box
               sx={{
@@ -59,16 +43,21 @@ export function ProcessSection() {
                   transform: 'rotate(45deg)',
                   bgcolor: 'primary.main',
                 },
+                '&:hover .step-number': { color: 'rgba(201, 168, 116, 0.75)' },
               }}
             >
               <Typography
                 component="span"
+                className="step-number"
+                dir="ltr"
                 sx={{
-                  fontFamily: serifFamily,
-                  fontStyle: 'italic',
+                  display: 'inline-block',
+                  fontFamily: (theme) => theme.typography.h1.fontFamily,
+                  fontStyle: lang === 'ar' ? 'normal' : 'italic',
                   fontSize: '3.2rem',
                   lineHeight: 1,
                   color: 'rgba(201, 168, 116, 0.42)',
+                  transition: 'color 0.35s ease',
                 }}
               >
                 0{index + 1}

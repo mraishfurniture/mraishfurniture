@@ -1,31 +1,15 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
 import CallOutlined from '@mui/icons-material/CallOutlined'
 import WhatsApp from '@mui/icons-material/WhatsApp'
-import { BUSINESS } from '../../global/config/business'
+import { BUSINESS, whatsappHref } from '../../global/config/business'
 import { Reveal } from '../../global/components/Reveal'
 import { Section } from '../../global/components/Section'
+import { useLanguage } from '../../global/i18n/LanguageContext'
 import { colors } from '../../global/theme/theme'
 
-const INFO = [
-  {
-    label: 'Phone & WhatsApp',
-    value: BUSINESS.phoneDisplay,
-    href: BUSINESS.whatsappHref,
-    caption: 'Photos, plans and voice notes welcome',
-  },
-  {
-    label: 'Workshop',
-    value: BUSINESS.city,
-    caption: 'Serving clients across the Kingdom',
-  },
-  {
-    label: 'Founder',
-    value: BUSINESS.founder,
-    caption: 'Carpenter, upholsterer, finisher',
-  },
-]
-
 export function ContactSection() {
+  const { t } = useLanguage()
+
   return (
     <Section id="contact" deep>
       <Box sx={{ textAlign: 'center', maxWidth: 760, mx: 'auto' }}>
@@ -42,7 +26,7 @@ export function ContactSection() {
                 color: colors.brassLight,
               }}
             >
-              Contact
+              {t.contact.overline}
             </Typography>
             <Box sx={{ width: 44, height: '1px', bgcolor: 'primary.main' }} />
           </Stack>
@@ -50,15 +34,12 @@ export function ContactSection() {
 
         <Reveal delay={80}>
           <Typography variant="h2" sx={{ mt: 3, color: colors.ivory }}>
-            Let’s build something that lasts.
+            {t.contact.title}
           </Typography>
         </Reveal>
 
         <Reveal delay={160}>
-          <Typography sx={{ mt: 2.5, color: colors.mutedDark }}>
-            Send a photo, a plan or just an idea — you’ll get a fast, honest answer about what it
-            takes and what it costs.
-          </Typography>
+          <Typography sx={{ mt: 2.5, color: colors.mutedDark }}>{t.contact.sub}</Typography>
         </Reveal>
 
         <Reveal delay={240}>
@@ -71,11 +52,15 @@ export function ContactSection() {
               size="large"
               variant="contained"
               startIcon={<WhatsApp />}
-              href={BUSINESS.whatsappHref}
+              href={whatsappHref(t.whatsappMessage)}
               target="_blank"
               rel="noreferrer"
             >
-              WhatsApp {BUSINESS.phoneDisplay}
+              {t.contact.whatsappButton}
+              &nbsp;
+              <Box component="span" dir="ltr">
+                {BUSINESS.phoneDisplay}
+              </Box>
             </Button>
             <Button
               size="large"
@@ -88,7 +73,7 @@ export function ContactSection() {
                 '&:hover': { borderColor: colors.ivory, bgcolor: 'rgba(244, 238, 226, 0.06)' },
               }}
             >
-              Call us
+              {t.callUs}
             </Button>
           </Stack>
         </Reveal>
@@ -104,10 +89,10 @@ export function ContactSection() {
             display: 'grid',
             gap: { xs: 4, sm: 3 },
             gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
-            textAlign: { xs: 'center', sm: 'left' },
+            textAlign: { xs: 'center', sm: 'start' },
           }}
         >
-          {INFO.map((item) => (
+          {t.contact.info.map((item) => (
             <Box key={item.label}>
               <Typography
                 component="p"
@@ -121,12 +106,13 @@ export function ContactSection() {
               >
                 {item.label}
               </Typography>
-              {item.href ? (
+              {item.isPhone ? (
                 <Typography
                   component="a"
-                  href={item.href}
+                  href={whatsappHref(t.whatsappMessage)}
                   target="_blank"
                   rel="noreferrer"
+                  dir="ltr"
                   sx={{
                     display: 'inline-block',
                     mt: 1.25,

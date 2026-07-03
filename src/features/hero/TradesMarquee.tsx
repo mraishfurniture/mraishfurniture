@@ -1,9 +1,12 @@
 import { Box, Typography } from '@mui/material'
-import { SERVICE_NAMES } from '../../global/config/business'
-import { colors, serifFamily } from '../../global/theme/theme'
+import { useLanguage } from '../../global/i18n/LanguageContext'
+import { colors } from '../../global/theme/theme'
 
 /** Slow scrolling band of the eight trades, bridging the hero into the page. */
 export function TradesMarquee() {
+  const { t } = useLanguage()
+  const names = t.services.items.map((item) => item.title)
+
   return (
     <Box
       sx={{
@@ -27,12 +30,12 @@ export function TradesMarquee() {
       >
         {[0, 1].map((copy) => (
           <Box key={copy} aria-hidden={copy === 1} sx={{ display: 'flex', alignItems: 'center' }}>
-            {SERVICE_NAMES.map((name) => (
+            {names.map((name) => (
               <Box key={name} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography
                   component="span"
                   sx={{
-                    fontFamily: serifFamily,
+                    fontFamily: (theme) => theme.typography.h5.fontFamily,
                     fontSize: '0.95rem',
                     letterSpacing: '0.22em',
                     textTransform: 'uppercase',

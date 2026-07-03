@@ -3,20 +3,18 @@ import { BUSINESS } from '../../global/config/business'
 import { Reveal } from '../../global/components/Reveal'
 import { Section } from '../../global/components/Section'
 import { SectionHeading } from '../../global/components/SectionHeading'
-import { colors, serifFamily } from '../../global/theme/theme'
+import { useLanguage } from '../../global/i18n/LanguageContext'
+import { colors } from '../../global/theme/theme'
 
 const WORKSHOP_IMG =
   'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&h=1125&q=80'
 const DETAIL_IMG =
   'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=560&h=560&q=80'
 
-const HIGHLIGHTS = [
-  { lead: 'Made to measure', rest: 'built for your room, not for a catalogue.' },
-  { lead: 'Restore or renew', rest: 'reupholstery and refinishing of the pieces you already love.' },
-  { lead: 'Start to finish', rest: 'design, build, install and hand over — one accountable team.' },
-]
-
 export function AboutSection() {
+  const { lang, t } = useLanguage()
+  const founderName = lang === 'ar' ? 'عمر مريش' : BUSINESS.founder
+
   return (
     <Section id="about">
       <Box
@@ -45,14 +43,21 @@ export function AboutSection() {
             <Box
               component="img"
               src={WORKSHOP_IMG}
-              alt="Sketching a bespoke piece at the drafting table"
+              alt={t.about.imgMainAlt}
               loading="lazy"
-              sx={{ position: 'relative', display: 'block', width: '100%', aspectRatio: '4 / 5', objectFit: 'cover' }}
+              sx={{
+                position: 'relative',
+                display: 'block',
+                width: '100%',
+                aspectRatio: '4 / 5',
+                objectFit: 'cover',
+                bgcolor: colors.imgPlaceholder,
+              }}
             />
             <Box
               component="img"
               src={DETAIL_IMG}
-              alt="Finished upholstery detail in a living room"
+              alt={t.about.imgDetailAlt}
               loading="lazy"
               sx={{
                 position: 'absolute',
@@ -63,6 +68,7 @@ export function AboutSection() {
                 objectFit: 'cover',
                 border: '10px solid',
                 borderColor: 'background.default',
+                bgcolor: colors.imgPlaceholder,
                 display: { xs: 'none', sm: 'block' },
               }}
             />
@@ -70,31 +76,27 @@ export function AboutSection() {
         </Reveal>
 
         <Box>
-          <SectionHeading
-            overline="The atelier"
-            title="Eight trades. One workshop. One standard."
-          />
+          <SectionHeading overline={t.about.overline} title={t.about.title} />
           <Reveal delay={120}>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Mraish Furniture is the workshop of {BUSINESS.founder}, an Amman craftsman whose work
-              spans everything a finished room needs — carpentry, upholstery, glass, aluminum,
-              drapery, painting and lighting, held together by a designer’s eye.
-            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>{t.about.p1}</Typography>
           </Reveal>
           <Reveal delay={200}>
-            <Typography sx={{ mt: 2.5, color: 'text.secondary' }}>
-              Because every trade lives under one roof, there are no subcontractor gaps and no weeks
-              lost between steps — just one person accountable for the result, from the first site
-              visit to the final installed detail.
-            </Typography>
+            <Typography sx={{ mt: 2.5, color: 'text.secondary' }}>{t.about.p2}</Typography>
           </Reveal>
 
           <Stack spacing={2} sx={{ mt: 4.5 }}>
-            {HIGHLIGHTS.map((item, index) => (
+            {t.about.highlights.map((item, index) => (
               <Reveal key={item.lead} delay={260 + index * 80}>
                 <Stack direction="row" spacing={2} sx={{ alignItems: 'flex-start' }}>
                   <Box
-                    sx={{ width: 7, height: 7, mt: 1.4, flexShrink: 0, transform: 'rotate(45deg)', bgcolor: 'primary.main' }}
+                    sx={{
+                      width: 7,
+                      height: 7,
+                      mt: 1.4,
+                      flexShrink: 0,
+                      transform: 'rotate(45deg)',
+                      bgcolor: 'primary.main',
+                    }}
                   />
                   <Typography sx={{ color: 'text.secondary' }}>
                     <Box component="strong" sx={{ color: 'text.primary', fontWeight: 700 }}>
@@ -123,7 +125,7 @@ export function AboutSection() {
                   color: colors.brassLight,
                   display: 'grid',
                   placeItems: 'center',
-                  fontFamily: serifFamily,
+                  fontFamily: (theme) => theme.typography.h5.fontFamily,
                   fontStyle: 'italic',
                   fontSize: '1.15rem',
                 }}
@@ -131,9 +133,12 @@ export function AboutSection() {
                 OM
               </Box>
               <Box>
-                <Typography sx={{ fontWeight: 700 }}>{BUSINESS.founder}</Typography>
+                <Typography sx={{ fontWeight: 700 }}>{founderName}</Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Founder &amp; master craftsman · {BUSINESS.phoneDisplay}
+                  {t.about.founderRole} ·{' '}
+                  <Box component="span" dir="ltr">
+                    {BUSINESS.phoneDisplay}
+                  </Box>
                 </Typography>
               </Box>
             </Stack>

@@ -13,19 +13,24 @@ import {
 } from '@mui/material'
 import CallOutlined from '@mui/icons-material/CallOutlined'
 import CloseRounded from '@mui/icons-material/CloseRounded'
+import LanguageOutlined from '@mui/icons-material/LanguageOutlined'
 import MenuRounded from '@mui/icons-material/MenuRounded'
 import WhatsApp from '@mui/icons-material/WhatsApp'
-import { BUSINESS, NAV_ITEMS } from '../config/business'
+import { BUSINESS, NAV_IDS, whatsappHref } from '../config/business'
+import { useLanguage } from '../i18n/LanguageContext'
 import { colors } from '../theme/theme'
 import { useScrollSpy } from '../hooks/useScrollSpy'
 
-const SPY_IDS = NAV_ITEMS.map((item) => item.id)
-
 function Wordmark() {
+  const { lang, t } = useLanguage()
   return (
     <Box component="a" href="#top" sx={{ textDecoration: 'none', color: 'inherit', lineHeight: 1 }}>
-      <Typography variant="h5" component="span" sx={{ fontStyle: 'italic', fontWeight: 600 }}>
-        Mraish
+      <Typography
+        variant="h5"
+        component="span"
+        sx={{ fontStyle: lang === 'ar' ? 'normal' : 'italic', fontWeight: lang === 'ar' ? 700 : 600 }}
+      >
+        {t.brand.name}
       </Typography>
       <Typography
         component="span"
@@ -39,17 +44,43 @@ function Wordmark() {
           opacity: 0.75,
         }}
       >
-        Furniture · Amman
+        {t.brand.tag}
       </Typography>
     </Box>
   )
 }
 
 export function Navbar() {
+  const { lang, t, toggle } = useLanguage()
   const scrolled = useScrollTrigger({ disableHysteresis: true, threshold: 24 })
-  const active = useScrollSpy(SPY_IDS)
+  const active = useScrollSpy(NAV_IDS)
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
+  const waHref = whatsappHref(t.whatsappMessage)
+
+  const langButton = (
+    <Button
+      onClick={toggle}
+      color="inherit"
+      startIcon={<LanguageOutlined />}
+      aria-label="Switch language"
+      sx={{
+        fontSize: '0.8rem',
+        fontWeight: 700,
+        letterSpacing: 0,
+        textTransform: 'none',
+        border: '1px solid',
+        borderColor: 'currentColor',
+        opacity: 0.85,
+        px: 1.5,
+        py: 0.5,
+        minWidth: 0,
+        '&:hover': { opacity: 1 },
+      }}
+    >
+      {t.langToggle}
+    </Button>
+  )
 
   return (
     <>
@@ -66,25 +97,25 @@ export function Navbar() {
         }}
       >
         <Container>
-          <Toolbar disableGutters sx={{ minHeight: { xs: 64, md: 78 }, justifyContent: 'space-between' }}>
+          <Toolbar disableGutters sx={{ minHeight: { xs: 64, md: 78 }, justifyContent: 'space-between', gap: 2 }}>
             <Wordmark />
 
             <Stack direction="row" spacing={4} sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {NAV_ITEMS.map((item) => (
+              {NAV_IDS.map((id) => (
                 <Box
-                  key={item.id}
+                  key={id}
                   component="a"
-                  href={`#${item.id}`}
+                  href={`#${id}`}
                   sx={{
                     position: 'relative',
                     textDecoration: 'none',
                     color: 'inherit',
-                    fontSize: '0.78rem',
+                    fontSize: lang === 'ar' ? '0.9rem' : '0.78rem',
                     fontWeight: 700,
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
                     py: 0.5,
-                    opacity: active === item.id ? 1 : 0.82,
+                    opacity: active === id ? 1 : 0.82,
                     '&::after': {
                       content: '""',
                       position: 'absolute',
@@ -93,19 +124,20 @@ export function Navbar() {
                       height: '1px',
                       width: '100%',
                       bgcolor: 'primary.main',
-                      transform: active === item.id ? 'scaleX(1)' : 'scaleX(0)',
+                      transform: active === id ? 'scaleX(1)' : 'scaleX(0)',
                       transformOrigin: 'left',
                       transition: 'transform 0.3s ease',
                     },
                     '&:hover': { opacity: 1, '&::after': { transform: 'scaleX(1)' } },
                   }}
                 >
-                  {item.label}
+                  {t.nav[id]}
                 </Box>
               ))}
             </Stack>
 
             <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+              {langButton}
               <Button
                 href={BUSINESS.phoneHref}
                 color="inherit"
@@ -118,18 +150,20 @@ export function Navbar() {
                   textTransform: 'none',
                 }}
               >
-                {BUSINESS.phoneDisplay}
+                <Box component="span" dir="ltr">
+                  {BUSINESS.phoneDisplay}
+                </Box>
               </Button>
               <Button
                 variant="contained"
                 size="medium"
-                href={BUSINESS.whatsappHref}
+                href={waHref}
                 target="_blank"
                 rel="noreferrer"
                 startIcon={<WhatsApp />}
                 sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
               >
-                WhatsApp
+                {t.whatsappCta}
               </Button>
               <IconButton
                 color="inherit"
@@ -145,7 +179,7 @@ export function Navbar() {
       </AppBar>
 
       <Drawer
-        anchor="right"
+        anchor={lang === 'ar' ? 'left' : 'right'}
         open={open}
         onClose={close}
         slotProps={{
@@ -156,8 +190,12 @@ export function Navbar() {
       >
         <Stack sx={{ height: '100%' }}>
           <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h6" component="span" sx={{ fontStyle: 'italic' }}>
-              Mraish
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{ fontStyle: lang === 'ar' ? 'normal' : 'italic' }}
+            >
+              {t.brand.name}
             </Typography>
             <IconButton color="inherit" aria-label="Close menu" onClick={close}>
               <CloseRounded />
@@ -165,11 +203,11 @@ export function Navbar() {
           </Stack>
 
           <Stack sx={{ mt: 5, flex: 1 }}>
-            {NAV_ITEMS.map((item, index) => (
+            {NAV_IDS.map((id, index) => (
               <Box
-                key={item.id}
+                key={id}
                 component="a"
-                href={`#${item.id}`}
+                href={`#${id}`}
                 onClick={close}
                 sx={{
                   display: 'flex',
@@ -187,7 +225,7 @@ export function Navbar() {
                   0{index + 1}
                 </Typography>
                 <Typography variant="h4" component="span">
-                  {item.label}
+                  {t.nav[id]}
                 </Typography>
               </Box>
             ))}
@@ -195,15 +233,27 @@ export function Navbar() {
 
           <Stack spacing={1.5} sx={{ mt: 4 }}>
             <Button
+              onClick={() => {
+                toggle()
+                close()
+              }}
+              variant="outlined"
+              color="inherit"
+              startIcon={<LanguageOutlined />}
+              sx={{ borderColor: colors.lineDark, textTransform: 'none', fontWeight: 700 }}
+            >
+              {t.langToggle}
+            </Button>
+            <Button
               fullWidth
               size="large"
               variant="contained"
               startIcon={<WhatsApp />}
-              href={BUSINESS.whatsappHref}
+              href={waHref}
               target="_blank"
               rel="noreferrer"
             >
-              WhatsApp us
+              {t.whatsappCta}
             </Button>
             <Button
               fullWidth
@@ -214,7 +264,9 @@ export function Navbar() {
               href={BUSINESS.phoneHref}
               sx={{ borderColor: colors.lineDark, '&:hover': { borderColor: colors.ivory } }}
             >
-              {BUSINESS.phoneDisplay}
+              <Box component="span" dir="ltr">
+                {BUSINESS.phoneDisplay}
+              </Box>
             </Button>
           </Stack>
         </Stack>

@@ -1,5 +1,7 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
-import { BUSINESS, NAV_ITEMS, SERVICE_NAMES } from '../config/business'
+import { Box, Container, IconButton, Stack, Typography } from '@mui/material'
+import ArrowUpwardRounded from '@mui/icons-material/ArrowUpwardRounded'
+import { BUSINESS, NAV_IDS, whatsappHref } from '../config/business'
+import { useLanguage } from '../i18n/LanguageContext'
 import { colors } from '../theme/theme'
 
 const columnHeading = {
@@ -12,6 +14,8 @@ const columnHeading = {
 } as const
 
 export function Footer() {
+  const { lang, t } = useLanguage()
+
   return (
     <Box component="footer" sx={{ bgcolor: colors.night, color: colors.mutedDark }}>
       <Container sx={{ py: { xs: 8, md: 10 } }}>
@@ -23,8 +27,12 @@ export function Footer() {
           }}
         >
           <Box>
-            <Typography variant="h4" component="p" sx={{ fontStyle: 'italic', color: colors.ivory }}>
-              Mraish
+            <Typography
+              variant="h4"
+              component="p"
+              sx={{ fontStyle: lang === 'ar' ? 'normal' : 'italic', color: colors.ivory }}
+            >
+              {t.brand.name}
             </Typography>
             <Typography
               component="p"
@@ -37,22 +45,21 @@ export function Footer() {
                 color: colors.faintDark,
               }}
             >
-              Furniture · Amman
+              {t.brand.tag}
             </Typography>
             <Typography variant="body2" sx={{ mt: 3, maxWidth: 300 }}>
-              Bespoke furniture and complete interior finishing, made by one workshop in Amman — from
-              first sketch to final installation.
+              {t.footer.blurb}
             </Typography>
           </Box>
 
           <Box>
             <Typography component="p" sx={columnHeading}>
-              Services
+              {t.footer.servicesHeading}
             </Typography>
             <Stack spacing={1}>
-              {SERVICE_NAMES.map((name) => (
-                <Typography key={name} variant="body2">
-                  {name}
+              {t.services.items.map((service) => (
+                <Typography key={service.title} variant="body2">
+                  {service.title}
                 </Typography>
               ))}
             </Stack>
@@ -60,14 +67,14 @@ export function Footer() {
 
           <Box>
             <Typography component="p" sx={columnHeading}>
-              Explore
+              {t.footer.exploreHeading}
             </Typography>
             <Stack spacing={1}>
-              {NAV_ITEMS.map((item) => (
+              {NAV_IDS.map((id) => (
                 <Typography
-                  key={item.id}
+                  key={id}
                   component="a"
-                  href={`#${item.id}`}
+                  href={`#${id}`}
                   variant="body2"
                   sx={{
                     color: 'inherit',
@@ -76,7 +83,7 @@ export function Footer() {
                     '&:hover': { color: colors.brassLight },
                   }}
                 >
-                  {item.label}
+                  {t.nav[id]}
                 </Typography>
               ))}
             </Stack>
@@ -84,28 +91,39 @@ export function Footer() {
 
           <Box>
             <Typography component="p" sx={columnHeading}>
-              Contact
+              {t.footer.contactHeading}
             </Typography>
             <Stack spacing={1}>
               <Typography
                 component="a"
                 href={BUSINESS.phoneHref}
+                dir="ltr"
                 variant="body2"
-                sx={{ color: colors.ivory, textDecoration: 'none', width: 'fit-content', '&:hover': { color: colors.brassLight } }}
+                sx={{
+                  color: colors.ivory,
+                  textDecoration: 'none',
+                  width: 'fit-content',
+                  '&:hover': { color: colors.brassLight },
+                }}
               >
                 {BUSINESS.phoneDisplay}
               </Typography>
               <Typography
                 component="a"
-                href={BUSINESS.whatsappHref}
+                href={whatsappHref(t.whatsappMessage)}
                 target="_blank"
                 rel="noreferrer"
                 variant="body2"
-                sx={{ color: 'inherit', textDecoration: 'none', width: 'fit-content', '&:hover': { color: colors.brassLight } }}
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  width: 'fit-content',
+                  '&:hover': { color: colors.brassLight },
+                }}
               >
-                WhatsApp — photos &amp; voice notes welcome
+                {t.footer.whatsappLine}
               </Typography>
-              <Typography variant="body2">{BUSINESS.city}</Typography>
+              <Typography variant="body2">{t.city}</Typography>
             </Stack>
           </Box>
         </Box>
@@ -117,17 +135,33 @@ export function Footer() {
             direction={{ xs: 'column', sm: 'row' }}
             spacing={1}
             sx={{
-              py: 3,
+              py: 2.5,
               justifyContent: 'space-between',
               alignItems: { xs: 'flex-start', sm: 'center' },
             }}
           >
             <Typography variant="caption" sx={{ color: colors.faintDark }}>
-              © {new Date().getFullYear()} {BUSINESS.name}. All rights reserved.
+              © {new Date().getFullYear()} {BUSINESS.name}. {t.footer.rights}
             </Typography>
-            <Typography variant="caption" sx={{ color: colors.faintDark }}>
-              Crafted in {BUSINESS.city}
-            </Typography>
+            <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+              <Typography variant="caption" sx={{ color: colors.faintDark }}>
+                {t.footer.craftedIn}
+              </Typography>
+              <IconButton
+                component="a"
+                href="#top"
+                size="small"
+                aria-label={t.footer.backToTop}
+                sx={{
+                  color: colors.brassLight,
+                  border: '1px solid',
+                  borderColor: colors.lineBrass,
+                  '&:hover': { bgcolor: 'rgba(201, 168, 116, 0.12)' },
+                }}
+              >
+                <ArrowUpwardRounded fontSize="small" />
+              </IconButton>
+            </Stack>
           </Stack>
         </Container>
       </Box>
